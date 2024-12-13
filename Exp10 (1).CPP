@@ -1,93 +1,78 @@
-/* In any language program mostly syntax error occurs due to unbalancing delimiter such as
-(),{},[]. Write C++ program using stack to check whether given expression is well parenthesized or not.
-*/
-#include<iostream.h>
-#define size 10
-class stackexp
-{
+#include <iostream>
+#include <cstring>
+#define SIZE 20
+
+using namespace std;
+
+class StackExp {
     int top;
-    char stk[size];
+    char stk[SIZE];
+
 public:
-    stackexp()
-    {
-     top=-1;
+    StackExp() { top = -1; }
+
+    void push(char x) {
+        if (isFull()) {
+            cout << "Stack Overflow!" << endl;
+            return;
+        }
+        stk[++top] = x;
     }
-    void push(char);
-    char pop();
-    int isfull();
-    int isempty();
+
+    char pop() {
+        if (isEmpty()) {
+            cout << "Stack Underflow!" << endl;
+            return '\0';
+        }
+        return stk[top--];
+    }
+
+    bool isFull() { return top == SIZE - 1; }
+
+    bool isEmpty() { return top == -1; }
 };
 
-void stackexp::push(char x)
-{
-    top=top+1;
-    stk[top]=x;
+bool isMatchingPair(char opening, char closing) {
+    return (opening == '(' && closing == ')') ||
+           (opening == '[' && closing == ']') ||
+           (opening == '{' && closing == '}');
 }
 
-char stackexp::pop()
-{
-    char s;
-    s=stk[top];
-    top=top-1;
-    return s;
+bool isWellParenthesized(const char* exp) {
+    StackExp stack;
+
+    for (int i = 0; exp[i] != '\0'; i++) {
+        char ch = exp[i];
+
+        // Push opening delimiters onto the stack
+        if (ch == '(' || ch == '[' || ch == '{') {
+            stack.push(ch);
+        }
+        // Check closing delimiters
+        else if (ch == ')' || ch == ']' || ch == '}') {
+            // If stack is empty or the pair doesn't match, it's invalid
+            if (stack.isEmpty() || !isMatchingPair(stack.pop(), ch)) {
+                return false;
+            }
+        }
+    }
+
+    // If stack is empty at the end, expression is well-parenthesized
+    return stack.isEmpty();
 }
 
-int stackexp::isfull()
-{
-    if(top==size)
-	return 1;
-    else
-	return 0;
-}
+int main() {
+    char exp[SIZE];
 
-int stackexp::isempty()
-{
-    if(top==-1)
-	return 1;
-    else
-	return 0;
-}
+    cout << "\n\t!! Parenthesis Checker..!!!!" << endl;
+    cout << "Enter the expression to check whether it is well-parenthesized: ";
+    cin >> exp;
 
-int main()
-{
-    stackexp s1;
-    char exp[20],ch;
-    int i=0;
-    cout << "\n\t!! Parenthesis Checker..!!!!" << endl; // prints !!!Hello World!!!
-    cout<<"\nEnter the expression to check whether it is in well form or not :  ";
-    cin>>exp;
-    if((exp[0]==')')||(exp[0]==']')||(exp[0]=='}'))
-    {
-	cout<<"\n Invalid Expression.....\n";
-	return 0;
+    if (isWellParenthesized(exp)) {
+        cout << "\nExpression is well-parenthesized.\n";
+    } else {
+        cout << "\nInvalid Expression or not well-parenthesized.\n";
     }
-    else
-    {
-	while(exp[i]!='\0')
-	{
-	    ch=exp[i];
-	    switch(ch)
-	    {
-	    case '(':s1.push(ch);break;
-	    case '[':s1.push(ch);break;
-	    case '{':s1.push(ch);break;
-	    case ')':s1.pop();break;
-	    case ']':s1.pop();break;
-	    case '}':s1.pop();break;
-	    }
-	    i=i+1;
-	}
-    }
-    if(s1.isempty())
-    {
-	cout<<"\nExpression is well parenthesised...\n";
-    }
-    else
-    {
-	cout<<"\nSorry !!! Invalid Expression or not in well parenthesized....\n";
-    }
+
     return 0;
 }
-
-
-
