@@ -1,4 +1,4 @@
- //write program using generalized list
+ //write program using generalized list 8 exp
 #include<stdlib.h>
 #include<iostream>
 using namespace std;
