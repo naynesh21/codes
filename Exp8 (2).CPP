@@ -1,3 +1,4 @@
+ //write program using generalized list
 #include<stdlib.h>
 #include<iostream>
 using namespace std;
