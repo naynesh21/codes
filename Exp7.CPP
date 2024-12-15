@@ -1,3 +1,4 @@
+# 7 exp of singly list 
 #include<iostream>
 #include<string.h>
 using namespace std;
