@@ -1,3 +1,4 @@
+// 10 practical 
 #include <iostream>
 #include <cstring>
 #define SIZE 20
