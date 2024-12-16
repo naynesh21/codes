@@ -7,7 +7,7 @@ Assignment No. 1 : In a second year computer engineering class, group A students
                    c) Number of students who play neither cricket nor badminton.
                    d) Number of students who play cricket and football but not badminton.
 (NOTE : While realising the group, duplicate entries should be avoided. Do not use SET built-in functions)
-
+...
 # Function to remove duplicate entries
 def removeduplicates(d): 
     list1 = [] 
